@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spantus.sphinx.kws.dto.KeyWordSpottingDto;
 import org.spantus.sphinx.kws.dto.PhonemeRangeSpottingResult;
-import org.spantus.sphinx.kws.linguist.flat.KWSFlatLinguist;
 import org.spantus.sphinx.kws.linguist.language.grammar.NoSkipGrammar;
 
 import com.google.common.base.Charsets;
@@ -31,7 +30,11 @@ import com.google.common.io.Files;
 
 import edu.cmu.sphinx.frontend.util.AudioFileDataSource;
 import edu.cmu.sphinx.recognizer.Recognizer;
+import edu.cmu.sphinx.result.ConfidenceResult;
+import edu.cmu.sphinx.result.ConfidenceScorer;
+import edu.cmu.sphinx.result.Path;
 import edu.cmu.sphinx.result.Result;
+import edu.cmu.sphinx.result.WordResult;
 import edu.cmu.sphinx.util.props.ConfigurationManager;
 import edu.cmu.sphinx.util.props.ConfigurationManagerUtils;
 
@@ -192,7 +195,6 @@ public class KeyWordSpottingServiceImpl {
 		 * outOfGrammarProbability configs
 		 */
 		ConfigurationManager cm = newConfigurationManager(dirFile, outOfGrammarProbabilityItem);
-		Recognizer recognizer = (Recognizer) cm.lookup("recognizer");
 		NoSkipGrammar grammar = extractGrammar(cm);
 		createDtos(phonemesRange, dtoMap, wordsToSpot, grammar);
 		for (String audioFileItem : audioFiles) {
@@ -203,7 +205,7 @@ public class KeyWordSpottingServiceImpl {
 					audioFileItem, phonemesRange, dtoMap, durationSec);
 			LOG.debug("Expected overall words count: {}",
 					currExpectedResult.size());
-			String resString = performTestEachAudio(recognizer);
+			String resString = recognitionAudio(cm);
 			calculateResults(dirFile, phonemesRange, dtoMap, wordsToSpot,
 					currExpectedResult, resString);
 		} // end of foreach over all wav files
@@ -245,11 +247,22 @@ public class KeyWordSpottingServiceImpl {
 	 * @param currExpectedResult
 	 * @return
 	 */
-	private String performTestEachAudio(Recognizer recognizer) {
+	private String recognitionAudio(ConfigurationManager cm) {
+		Recognizer recognizer = (Recognizer) cm.lookup("recognizer");
 		recognizer.allocate();
 		Result result = recognizer.recognize();
+		if (result == null) {
+			return null;
+		}
 		String resString = result.getTimedBestResult(false, true);
-		LOG.debug("Result: {}", resString);
+		LOG.debug("[performTestEachAudio]Result: {}", resString);
+		
+		
+		
+        for (WordResult wr : result.getWords()) {
+            LOG.debug("[performTestEachAudio] \t word: {} [start:{}]", wr.getPronunciation().getWord().getSpelling(), wr.getStartFrame());
+
+        }
 		recognizer.deallocate();
 		return resString;
 
@@ -419,7 +432,7 @@ public class KeyWordSpottingServiceImpl {
 			KeyWordSpottingDto dto = dtoMap.get(phonemesRangeItem);
 			result.setPhonemesRangeItem(phonemesRangeItem);
 			if (dto.getTestsCount() > 0) {
-				LOG.debug("\t Tests count for {} for Test count: {} ",
+				LOG.debug("[processAllWavResults]\t Tests count for {} for Test count: {} ",
 						phonemesRangeItem, dto.getTestsCount());
 				dto.setAccuracy(dto.getAccuracy()
 						/ (double) dto.getTestsCount());
@@ -439,7 +452,7 @@ public class KeyWordSpottingServiceImpl {
 					result.getPhonemesRangeItem(),
 					result.getAccuracy(),
 					result.getFalseAlarmsCountRatio());
-			LOG.debug("Result: {}", resultStr);
+			LOG.debug("[processAllWavResults]Result: {}", resultStr);
 			results.add(result);
 		}
 		return results;
@@ -570,7 +583,7 @@ public class KeyWordSpottingServiceImpl {
 									iResult.getPhonemesRangeItem(),
 									iResult.getAccuracy(),
 									iResult.getFalseAlarmsCountRatio());
-							LOG.debug("Result: {}", resultStr);
+							LOG.debug("[saveResults]Result: {}", resultStr);
 							writer.write(resultStr);
 						}
 					}

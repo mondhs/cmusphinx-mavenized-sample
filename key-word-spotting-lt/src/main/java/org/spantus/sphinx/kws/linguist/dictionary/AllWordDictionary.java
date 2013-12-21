@@ -23,8 +23,6 @@ import edu.cmu.sphinx.util.props.ConfigurationManagerUtils;
  */
 public class AllWordDictionary extends FastDictionary {
 	// take input from ConfigurationManager later
-	/** Path to G2P model file */
-	public static final String G2P_MODEL = "file:./resource/models/cmudict04_lts.bin";
 	private boolean addSilEndingPronunciation;
 	private PronunciationServiceImpl pronunciationService;
 

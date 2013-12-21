@@ -206,7 +206,13 @@ public class PhoneLoopCI {
 
 class UnknownWordState extends SentenceHMMState implements WordSearchState {
 
-    @Override
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 914754456883847082L;
+
+
+	@Override
     public Pronunciation getPronunciation() {
         return Word.UNKNOWN.getPronunciations()[0];
     }
@@ -239,7 +245,13 @@ class UnknownWordState extends SentenceHMMState implements WordSearchState {
 
 class LoopBackState extends SentenceHMMState {
 
-    LoopBackState(SentenceHMMState parent) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8076501208909174565L;
+
+
+	LoopBackState(SentenceHMMState parent) {
         super("CIPhonesLoopBackState", parent, 0);
     }
 
@@ -252,7 +264,13 @@ class LoopBackState extends SentenceHMMState {
 
 class BranchOutState extends SentenceHMMState {
 
-    BranchOutState(SentenceHMMState parent) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1549431389429105754L;
+
+
+	BranchOutState(SentenceHMMState parent) {
         super("BranchOutState", parent, 0);
     }
 

@@ -488,7 +488,6 @@ public class KWSFlatLinguist implements Linguist, Configurable {
 		TimerPool.getTimer(this, "Connect Nodes").stop();
 
 		SentenceHMMState initialState = findStartingState().get(0);
-		int count = 0;
 		// add an out-of-grammar branch between each word transition if
 		// configured to do so
 		if (addOutOfGrammarBranch) {
