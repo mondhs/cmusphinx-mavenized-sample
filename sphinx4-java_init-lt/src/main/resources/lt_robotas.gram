@@ -3,5 +3,5 @@
 grammar robotas;
 
 public <COMMAND> = <EIK> | <SUK>;
-<EIK> = (EIK | VARYK ) [ ( VIENĄ | DU | TRIS | KETURIS | PENKIS {OPEN} ) METRUS ] (PIRMYN | ATGAL);
+<EIK> = (EIK | VARYK ) [ ( VIENĄ ŽINGSNĮ | DU ŽINGIUS | TRIS ŽINGIUS | KETURIS ŽINGIUS | PENKIS ŽINGIUS) ] (PIRMYN | ATGAL);
 <SUK> = (SUK | GRĘŽKIS ) ( KAIRĖN | DEŠINĖN );

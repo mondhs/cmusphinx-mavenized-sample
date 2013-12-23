@@ -20,6 +20,11 @@
 			<artifactId>lt.cd_cont_200</artifactId>
 			<version>1.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.spantus.externals.recognition</groupId>
+			<artifactId>spnt-sphinx-recognition</artifactId>
+			<version>0.3-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<!-- spantus repo contains sphinx maven artifacts -->
 	<repositories>
@@ -34,7 +39,7 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-	</repositories>	
+	</repositories>
 	<!-- define which class should be started for -->
 	<build>
 		<plugins>

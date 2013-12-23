@@ -1,9 +1,10 @@
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.spantus.extr.wordspot.sphinx.linguist.dictionary.KeyworGeneratedDictionary;
 
 import edu.cmu.sphinx.decoder.Decoder;
 import edu.cmu.sphinx.decoder.pruner.SimplePruner;
@@ -27,7 +28,6 @@ import edu.cmu.sphinx.jsgf.JSGFGrammar;
 import edu.cmu.sphinx.linguist.acoustic.UnitManager;
 import edu.cmu.sphinx.linguist.acoustic.tiedstate.Sphinx3Loader;
 import edu.cmu.sphinx.linguist.acoustic.tiedstate.TiedStateAcousticModel;
-import edu.cmu.sphinx.linguist.dictionary.FastDictionary;
 import edu.cmu.sphinx.linguist.flat.FlatLinguist;
 import edu.cmu.sphinx.recognizer.Recognizer;
 import edu.cmu.sphinx.result.Result;
@@ -88,14 +88,29 @@ public class RobotoJavaValdymas{
 
             if (rezultatas != null) {
                 String rezultatoTekstas = rezultatas.getBestFinalResultNoFiller();
-                System.out.println("tu sakei: " + rezultatoTekstas + '\n');
+                atptikta(rezultatoTekstas);
             } else {
                 System.out.println("Neišgirdau ką pasakėte.\n");
             }
         }
 	}
 	
-	
+	protected void atptikta(String rezultatoTekstas){
+		System.out.println("tu sakei: " + rezultatoTekstas + '\n');
+//		try {
+//			Socket s = new Socket("127.0.0.1", 9090);
+//			BufferedWriter bufOut = new BufferedWriter( new OutputStreamWriter( s.getOutputStream() ) );
+//			bufOut.write( rezultatoTekstas.toUpperCase() );
+//			bufOut.flush();
+//			bufOut.close();
+//			s.close();
+//		} catch (UnknownHostException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+
+	}
 
 
 	public ConfigurationManager newConfigurationManager() {
@@ -138,7 +153,7 @@ public class RobotoJavaValdymas{
 		dictionaryMap.put("dictionaryPath", "resource:/lt.cd_cont_200/dict/robot.dict");
 		dictionaryMap.put("fillerPath", "resource:/lt.cd_cont_200/noisedict");
 		dictionaryMap.put("unitManager", "unitManager");
-		cm.addConfigurable(FastDictionary.class, "dictionary", dictionaryMap);
+		cm.addConfigurable(KeyworGeneratedDictionary.class, "dictionary", dictionaryMap);
 		 
 		 
 		Map<String, Object> grammarMap = new HashMap<String, Object>();
