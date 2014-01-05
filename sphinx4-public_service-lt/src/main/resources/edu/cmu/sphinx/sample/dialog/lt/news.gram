@@ -1,0 +1,14 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar for dialog manager example
+ */
+
+grammar news;
+
+import <commands.standard_commands>;
+
+public <commands> = <standard_commands> ;
+
+public <read_news> =  parodyk delfį {exec:firefox delfi.lt} |
+        parodyk elertė {exec:firefox http://www.lrt.lt/mediateka/laidos/P/1444/panorama};

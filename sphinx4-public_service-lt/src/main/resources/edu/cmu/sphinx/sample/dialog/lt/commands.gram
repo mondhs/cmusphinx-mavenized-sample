@@ -1,0 +1,11 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar for standard commands
+ */
+
+grammar commands;
+
+public <standard_commands> =
+                      Prašau pagalbos                   { help } |
+                      Pagrindinis meniu    { goto_menu } ;

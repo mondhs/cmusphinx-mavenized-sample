@@ -1,0 +1,11 @@
+#JSGF V1.0;
+
+grammar year;
+
+import <commands.standard_commands>;
+import <number_inc.number_set>;
+
+public <commands> = <standard_commands> ;
+
+public <number_sequence> = (VIENAS{1} DEVYNI{9}| DU{2} NULIS{0}) <number_set> <number_set>;
+

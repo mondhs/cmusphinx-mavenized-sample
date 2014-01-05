@@ -1,0 +1,8 @@
+#JSGF V1.0;
+
+grammar confirmation;
+
+
+
+public <confirm> = TEISINGAI{TRUE}|KLAIDINGAI{FALSE};
+

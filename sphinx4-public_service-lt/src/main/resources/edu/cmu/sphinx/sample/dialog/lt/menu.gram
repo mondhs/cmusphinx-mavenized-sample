@@ -1,0 +1,15 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar for dialog manager example
+ */
+
+grammar menu;
+
+public <command> =      
+//                        listen to music         { goto_music } |
+                        skaityti naujienas        { goto_naujienos } |
+                        atpažinti skaičius        { goto_numeriai } |
+                        parodyk statistikas         { stats } |
+                        palikti programą       { exit } |
+                        prašau pagalbos         { help } ;

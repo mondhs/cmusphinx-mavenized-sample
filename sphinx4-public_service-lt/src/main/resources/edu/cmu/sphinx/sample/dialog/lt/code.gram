@@ -1,0 +1,11 @@
+#JSGF V1.0;
+
+grammar kodas;
+
+import <commands.standard_commands>;
+import <number_inc.number_set>;
+
+public <commands> = <standard_commands> ;
+
+public <number_sequence> = <number_set> <number_set> <number_set>;
+
